@@ -41,7 +41,6 @@ pip install -e .
 
 Preprocess dataset.
 ```
-cd /src/PRIVIMAGE+D
 # download and preprocess MNIST
 python precompute_data_mnist_fid_statistics.py
 ```
@@ -53,29 +52,14 @@ python extract_mean.py
 ```
 And then, we pre-train the diffusion model on these mean images.
 ```
-python main.py --mode pretrain --data.path=data
+python main.py --mode pretrain --config configs/mnist_28/pretrain.yaml --workdir pretrain_mnist28_e1_mean_ch22_at14_n5_sig5_q0.1 --data.path=mean_mnist_5_5_0.1/noisy
 ```
-After pre-training, the checkpoints will be saved with the according accuracy on the validate set. You can choose the checkpoint with the highest accuracy to query the semantics.
+After pre-training, we fine-tuning the diffusion model on MNIST with DP-SGD.
 ```
-python query_semantics.py --weight_file weight_path --tar_dataset cifar10 --data_dir /src/data/CIFAR-10 --num_words 5 --sigma1 484 --tar_num_classes 10
-```
-The query result will be saved as a `.pth` file into the folder `/QueryResults`.
-
-Second, pretrain the diffusion model with the query result. Please change data_dir parameters into yours in `/src/Pre-training/configs/cifar10_32/pretrain_s.yaml`.
-```
-cd /src/Pre-training
-CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py --mode train --worker_dir pt_dir
+python main.py --mode train --config configs/mnist_28/train_eps_1.0.yaml --workdir mnist28_e1_mean_ch22_at14_n5_sig5_q0.1 --data.path=data
 ```
 
-After training, the checkpoint will be saved as `/src/Pre-training/pt_dir/checkpoints/final_checkpoint.pth`.
-Third, please finetune the pretrained model on the sensitive dataset. Readers should change data_dir and ckpt parameters into yours in `/src/PRIVIMAGE+D/configs/cifar10_32/train_eps_10.0_s.yaml`.
-
-```
-cd /src/PRIVIMAGE+D
-CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py --mode train --worker_dir ft_dir
-```
-
-The FID of synthetic images will be saved in `/src/PRIVIMAGE/ft_dir/stdout.txt`.
+After training, the FID of synthetic images will be saved in `./mnist28_e1_mean_ch22_at14_n5_sig5_q0.1/stdout.txt` and the synthetic images will be saved in `./mnist28_e1_mean_ch22_at14_n5_sig5_q0.1/samples60000_acc`
 
 ### 3.4 Evaluation
 
