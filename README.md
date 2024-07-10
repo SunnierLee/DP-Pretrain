@@ -25,7 +25,7 @@ We provide an example for how to reproduce the results on MNIST in our paper. Su
 
 ### 3.1 Installation
 
-To setup the environment of PRIVIMAGE, we use `conda` to manage our dependencies. Our developers are conducted using `CUDA 11.8`. 
+To setup the environment of DPP, we use `conda` to manage our dependencies. Our developers are conducted using `CUDA 11.8`. 
 
 Run the following commands to install PRIVIMAGE:
  ```
