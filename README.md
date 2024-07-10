@@ -21,7 +21,7 @@ This is the official implementaion of paper ***Differentially Private Self-Pretr
 Differential Privacy (DP) image data synthesis aims to generate synthetic images from a sensitive image dataset while preserving the privacy of the individual images in the dataset, allowing organizations to share and utilize synthetic images without privacy concerns. Although previous methods have achieved great progress, especially training diffusion models on sensitive images with DP Stochastic Gradient Descent (DP-SGD), they still suffer from unsatisfactory performance degradation due to the problematic convergence of DP-SGD, especially on some complex image datasets. Motivated by recent success in which researchers leveraged a public image dataset to pre-train diffusion models before DP-SGD training, this paper explores how to pre-train diffusion models without using a public dataset. We propose a novel DP pre-training method, termed Differentially Private Self-Pretraining (DPP). DPP first queries center images from the sensitive image dataset with suitable Gaussian injected for satisfying DP. Then, these center images are post-enhanced by an augmentation algorithm bag, and enhanced images are used for pre-training diffusion models. Finally, we fine-tune the pretrained diffusion models on the sensitive dataset using DP-SGD. Extensive experiments demonstrate that, on the average of four investigated image datasets, the FID and classification accuracy of the downstream task of synthetic images from DPP is 33.1% lower and 2.1% higher than the state-of-the-art method that does not use public data. Additional experiments show that when the public dataset used for pre-training is explicitly distinct from the sensitive dataset we aim to protect, DPP still achieves most-ofthe-best performance without using an additional public dataset.
 
 ## 3. Get Start
-We provide an example for how to reproduce the results on CIFAR-10 in our paper. Suppose you had 4 GPUs on your device.
+We provide an example for how to reproduce the results on MNIST in our paper. Suppose you had 4 GPUs on your device.
 
 ### 3.1 Installation
 
@@ -32,7 +32,9 @@ Run the following commands to install PRIVIMAGE:
 conda create -n privimage python=3.8 -y && conda activate privimage
 pip install --upgrade pip
 pip install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.8 -c pytorch -c nvidia
-pip install -r requirements.txt 
+pip install -r requirements.txt
+cd opacus
+pip install -e .
  ```
 
 ### 3.2 Dataset and Files Preparation
