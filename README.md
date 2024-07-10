@@ -54,38 +54,19 @@ And then, we pre-train the diffusion model on these mean images.
 ```
 python main.py --mode pretrain --config configs/mnist_28/pretrain.yaml --workdir pretrain_mnist28_e1_mean_ch22_at14_n5_sig5_q0.1 --data.path=mean_mnist_5_5_0.1/noisy
 ```
-After pre-training, we fine-tuning the diffusion model on MNIST with DP-SGD.
+After pre-training, we fine-tune the diffusion model on MNIST with DP-SGD.
 ```
 python main.py --mode train --config configs/mnist_28/train_eps_1.0.yaml --workdir mnist28_e1_mean_ch22_at14_n5_sig5_q0.1 --data.path=data
 ```
 
-After training, the FID of synthetic images will be saved in `./mnist28_e1_mean_ch22_at14_n5_sig5_q0.1/stdout.txt` and the synthetic images will be saved in `./mnist28_e1_mean_ch22_at14_n5_sig5_q0.1/samples60000_acc`
+After training, the FID will be saved in `./mnist28_e1_mean_ch22_at14_n5_sig5_q0.1/stdout.txt` and the synthetic images will be saved in `./mnist28_e1_mean_ch22_at14_n5_sig5_q0.1/samples60000_acc`
 
 ### 3.4 Evaluation
 
-Use trained PRIVIMAGE to generate 50,000 images for training classifiers.
+Use 60,000 synthetic images to train a CNN classifier.
 
 ```
-CUDA_VISIBLE_DEVICES=0,1,2,3 python main.py --mode eval --worker_dir ft_dir/sample50000 -- model.ckpt=/src/PRIVIMAGE+D/ft_dir/checkpoints/final_checkpoint.pth
-cd /src/Evaluation
-python downstream_classification.py --out_dir /src/PRIVIMAGE+D/ft_dir --train_dir /src/PRIVIMAGE+D/ft_dir/sample50000/samples --test_dir data_dir --dataset cifar10
+python downstream_classification.py --train_dir ./mnist28_e1_mean_ch22_at14_n5_sig5_q0.1/samples60000_acc/samples --test_dir ./data/ --out_dir ./mnist28_e1_mean_ch22_at14_n5_sig5_q0.1/samples60000_acc/
 ```
-The Classification Accuracy (CA) of trained classifiers on the testset will be saved into `/src/PRIVIMAGE+D/ft_dir/evaluation_downstream_acc_log.txt`.
-
-## 4. Contacts
-If you have any problems, please feel free to contact Kecen Li (likecen2023@ia.ac.cn) and Chen Gong (ChenG_abc@outlook.com).
-
-## 5. Acknowledgement
-The codes for training the diffusion models with DP-SGD is based on the [DPDM](https://github.com/nv-tlabs/DPDM).
-
-## 6. Citation
-
-```text
-@article{li2023privimage,
-  title={PRIVIMAGE: Differentially Private Synthetic Image Generation using Diffusion Models with Semantic-Aware Pretraining},
-  author={Kecen Li and Chen Gong and Zhixiang Li and Yuzhong Zhao and Xinwen Hou and Tianhao Wang},
-  journal={arXiv preprint arXiv:2307.09756},
-  year={2023}
-}
-```
+The Acc on the testset will be saved into `./mnist28_e1_mean_ch22_at14_n5_sig5_q0.1/samples60000_acc/evaluation_downstream_acc_log.txt`.
 
