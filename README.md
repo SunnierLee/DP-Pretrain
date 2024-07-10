@@ -15,9 +15,6 @@ This is the official implementaion of paper ***Differentially Private Self-Pretr
     - [3.2 Dataset and Files Preparation](#32-dataset-and-files-preparation)
     - [3.3 Training](#33-training)
     - [3.4 Inference](#34-inference)
-  - [4. Contacts](#4-contacts)
-  - [5. Acknowledgment](#5-acknowledgment)
-  - [6. Citation](#6-citation)
 
 ## 2. Introduction
 
