@@ -3,9 +3,8 @@
 # PRIVIMAGE: Differentially Private Synthetic Image Generation using Diffusion Models with Semantic-Aware Pretraining
 </div>
 
-This is the official implementaion of paper [***Differentially Private Self-Pretraining Diffusion Models for the Private Image Synthesis***], which is accepted in ***USENIX Security 2024***. This repository contains Pytorch training code and evaluation code. PRIVIMAGE is a Differetial Privacy (DP) image generation tool, which leverages the DP technique to generate synthetic data to replace the sensitive data, allowing organizations to share and utilize synthetic images without privacy concerns.
+This is the official implementaion of paper ***Differentially Private Self-Pretraining Diffusion Models for the Private Image Synthesis***. This repository contains Pytorch training code and evaluation code. PRIVIMAGE is a Differetial Privacy (DP) image generation tool, which leverages the DP technique to generate synthetic data to replace the sensitive data, allowing organizations to share and utilize synthetic images without privacy concerns.
 
-<p align="center">Synthetic images from PRIVIMAGE on CIFAR-10 and CelebA32&64 with $\epsilon=10$.</p>
 
 ## 1. Contents
 - PRIVIMAGE: Differentially Private Synthetic Image Generation using Diffusion Models with Semantic-Aware Pretraining
