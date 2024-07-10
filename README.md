@@ -14,7 +14,7 @@ This is the official implementaion of paper ***Differentially Private Self-Pretr
     - [3.1 Installation](#31-installation)
     - [3.2 Dataset and Files Preparation](#32-dataset-and-files-preparation)
     - [3.3 Training](#33-training)
-    - [3.4 Inference](#34-inference)
+    - [3.4 Evaluation](#34-evaluation)
 
 ## 2. Introduction
 
@@ -45,7 +45,7 @@ Preprocess dataset.
 python precompute_data_mnist_fid_statistics.py
 ```
 
-### 3.3 Pre-training
+### 3.3 Training
 First, query mean images from MNIST.
 ```
 python extract_mean.py
