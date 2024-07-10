@@ -38,44 +38,24 @@ pip install -e .
  ```
 
 ### 3.2 Dataset and Files Preparation
-Download the files in the table and arrange the files according to the file tree below.
-  | Dataset & Files                        | Download                                                               | Usage                                                                 |
-  | -------------------------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------- |
-  | data/ImageNet_ILSVRC2012             | [Official Link](http://image-net.org/)                        | Pretraining dataset                                                     |
-  | data/CIFAR-10                   | [Google Drive](https://drive.google.com/file/d/1pSwaN0Tn7Y2D6EOpkj3A1N8LEYR277Aw/view?usp=drive_link)      | Sensitive dataset                                        |
 
-```text
-    |--src/
-      |--data/
-        |--ImageNet_ILSVRC2012/
-           |--train/
-             |--n01440764/
-             |--n01443537/
-             ...
-           |--val/
-             |--n01440764/
-             |--n01443537/
-             ...
-        |--CIFAR-10
-           |--cifar-10-python.tar.gz
-```
-Preprocess dataset for faster training.
+Preprocess dataset.
 ```
 cd /src/PRIVIMAGE+D
-# preprocess CIFAR-10
-python dataset_tool.py --source /src/data/CIFAR-10/cifar-10-python.tar.gz --dest /src/data/CIFAR-10/cifar10.zip
-python compute_fid_statistics.py --path /src/data/CIFAR-10/cifar10.zip --file /src/data/CIFAR-10/cifar10.npz
-# preprocess ImageNet and save it as a folder /src/data/ImageNet32_ILSVRC2012
-sh pd.sh
+# download and preprocess MNIST
+python precompute_data_mnist_fid_statistics.py
 ```
 
-### 3.3 Training
-First, train a semantic query function on the public dataset ImageNet.
+### 3.3 Pre-training
+First, query mean images from MNIST.
 ```
-cd /src/SemanticQuery
-CUDA_VISIBLE_DEVICES=0,1,2,3 torchrun --nproc_per_node=4 --nnodes=1 train_imagenet_classifier.py
+python extract_mean.py
 ```
-After training, the checkpoints will be saved with the according accuracy on the validate set. You can choose the checkpoint with the highest accuracy to query the semantics.
+And then, we pre-train the diffusion model on these mean images.
+```
+python main.py --mode pretrain --data.path=data
+```
+After pre-training, the checkpoints will be saved with the according accuracy on the validate set. You can choose the checkpoint with the highest accuracy to query the semantics.
 ```
 python query_semantics.py --weight_file weight_path --tar_dataset cifar10 --data_dir /src/data/CIFAR-10 --num_words 5 --sigma1 484 --tar_num_classes 10
 ```
