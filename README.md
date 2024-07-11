@@ -3,7 +3,7 @@
 # Differentially Private Self-Pretraining Diffusion Models for the Private Image Synthesis
 </div>
 
-This is the official implementaion of paper ***Differentially Private Self-Pretraining Diffusion Models for the Private Image Synthesis***. This repository contains Pytorch training code and evaluation code. PRIVIMAGE is a Differetial Privacy (DP) image generation tool, which leverages the DP technique to generate synthetic data to replace the sensitive data, allowing organizations to share and utilize synthetic images without privacy concerns.
+This is the official implementaion of paper ***Differentially Private Self-Pretraining Diffusion Models for the Private Image Synthesis***. This repository contains Pytorch training code and evaluation code. DPP is a Differetial Privacy (DP) image generation tool, which leverages the DP technique to generate synthetic data to replace the sensitive data, allowing organizations to share and utilize synthetic images without privacy concerns.
 
 
 ## 1. Contents
