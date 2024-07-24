@@ -27,7 +27,7 @@ We provide an example for how to reproduce the results on MNIST in our paper. Su
 
 To setup the environment of DPP, we use `conda` to manage our dependencies. Our developers are conducted using `CUDA 11.8`. 
 
-Run the following commands to install PRIVIMAGE:
+Run the following commands to install DPP:
  ```
 conda create -n privimage python=3.8 -y && conda activate privimage
 pip install --upgrade pip
