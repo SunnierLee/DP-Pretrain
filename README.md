@@ -29,7 +29,7 @@ To setup the environment of DPP, we use `conda` to manage our dependencies. Our 
 
 Run the following commands to install DPP:
  ```
-conda create -n privimage python=3.8 -y && conda activate privimage
+conda create -n dpp python=3.8 -y && conda activate dpp
 pip install --upgrade pip
 pip install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.8 -c pytorch -c nvidia
 pip install -r requirements.txt
