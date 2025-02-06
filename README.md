@@ -1,13 +1,13 @@
 <div align=center>
   
-# Differentially Private Self-Pretraining Diffusion Models for the Private Image Synthesis
+# From Easy to Hard: Building a Shortcut for Differentially Private Image Synthesis
 </div>
 
-This is the official implementaion of paper ***Differentially Private Self-Pretraining Diffusion Models for the Private Image Synthesis***. This repository contains Pytorch training code and evaluation code. DPP is a Differetial Privacy (DP) image generation tool, which leverages the DP technique to generate synthetic data to replace the sensitive data, allowing organizations to share and utilize synthetic images without privacy concerns.
+This is the official implementaion of paper ***From Easy to Hard: Building a Shortcut for Differentially Private Image Synthesis***. This repository contains Pytorch training code and evaluation code. DP-FETA is a Differetial Privacy (DP) image generation tool, which leverages the DP technique to generate synthetic data to replace the sensitive data, allowing organizations to share and utilize synthetic images without privacy concerns.
 
 
 ## 1. Contents
-- Differentially Private Self-Pretraining Diffusion Models for the Private Image Synthesis
+- From Easy to Hard: Building a Shortcut for Differentially Private Image Synthesis
   - [1. Contents](#1-contents)
   - [2. Introduction](#2-introduction)
   - [3. Get Start](#3-get-start)
@@ -18,18 +18,18 @@ This is the official implementaion of paper ***Differentially Private Self-Pretr
 
 ## 2. Introduction
 
-Differential Privacy (DP) image data synthesis aims to generate synthetic images from a sensitive image dataset while preserving the privacy of the individual images in the dataset, allowing organizations to share and utilize synthetic images without privacy concerns. Although previous methods have achieved great progress, especially training diffusion models on sensitive images with DP Stochastic Gradient Descent (DP-SGD), they still suffer from unsatisfactory performance degradation due to the problematic convergence of DP-SGD, especially on some complex image datasets. Motivated by recent success in which researchers leveraged a public image dataset to pre-train diffusion models before DP-SGD training, this paper explores how to pre-train diffusion models without using a public dataset. We propose a novel DP pre-training method, termed Differentially Private Self-Pretraining (DPP). DPP first queries center images from the sensitive image dataset with suitable Gaussian injected for satisfying DP. Then, these center images are post-enhanced by an augmentation algorithm bag, and enhanced images are used for pre-training diffusion models. Finally, we fine-tune the pre-trained diffusion models on the sensitive dataset using DP-SGD. Extensive experiments demonstrate that, on the average of four investigated image datasets, the FID and classification accuracy of the downstream task of synthetic images from DPP is 33.1% lower and 2.1% higher than the state-of-the-art method that does not use public data. Additional experiments show that when the public dataset used for pre-training is explicitly distinct from the sensitive dataset we aim to protect, DPP still achieves most-of-the-best performance without using an additional public dataset.
+Differentially private (DP) image data synthesis aims to generate synthetic images from a sensitive image dataset while preserving privacy, so organizations can share and utilize synthetic images. Although previous methods have achieved great progress, especially in training diffusion models on sensitive images with DP Stochastic Gradient Descent (DP-SGD), they still suffer from unsatisfactory performance. In this work, inspired by curriculum learning, we propose a two-stage DP image synthesis framework, where diffusion models learn to generate DP synthetic images from easy to hard. Unlike existing methods that directly use DP-SGD to train models, we propose an easy stage in the beginning, where diffusion models learn simple features of the sensitive images. To facilitate this easy stage, we propose to use central images, simply aggregations of random samples of the sensitive dataset. Intuitively, although those central images do not show details, they demonstrate useful characteristics of all images and only incur minimal `DP cost', thus helping early-phase model training.
 
 ## 3. Get Start
 We provide an example for how to reproduce the results on MNIST in our paper. Suppose you had 4 GPUs on your device.
 
 ### 3.1 Installation
 
-To setup the environment of DPP, we use `conda` to manage our dependencies. Our developers are conducted using `CUDA 11.8`. 
+To setup the environment of DP-FETA, we use `conda` to manage our dependencies. Our developers are conducted using `CUDA 11.8`. 
 
-Run the following commands to install DPP:
+Run the following commands to install DP-FETA:
  ```
-conda create -n dpp python=3.8 -y && conda activate dpp
+conda create -n dp-feta python=3.8 -y && conda activate dp-feta
 pip install --upgrade pip
 pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
 pip install -r requirements.txt
